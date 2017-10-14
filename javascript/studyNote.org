@@ -4,21 +4,14 @@
 Author: wayne
 [2017-10-14 Sat] Start my study note.
 
-** Chapter1 Javascript Introduction
+** Chapter1 What Is Javascript
 Need to study: Javascript  DOM BOM
-
 ** Chapter2 Javascript in HTML
    1. <script>Element
       defer and async
       defer = "defer": load the script after the html was loaded.
       async = "async": asynchronously load the scripts.
-      
-
-
-#+BEGIN_EXAMPLE 
-
-#+END_EXAMPLE
-** Chapter3 Basic concepts
+** Chapter3 Language Basics
    1. strict mode
       Add this line at the begin of the code
       "use strict"
@@ -44,7 +37,45 @@ Need to study: Javascript  DOM BOM
       toLocaleString()
       toString()
       valueOf()
-
-
+     
+** Chapter4 Variables,scope, and Memory
+   1. Object Example
+      #+BEGIN_EXAMPLE
+      function setName(obj) {
+        obj.name = "Nicholas";
+        obj = new Object();       //This is a local variable,will be destoryed after the function is done.
+        obj.name = "Greg";
+      }
       
+      var person = new Object();
+      setName(Person);
+      alert(person.name);         //"Nicholas"
+      #+END_EXAMPLE
+   2. DeterminingType
+      Basic data type:         typeof variable
+      Reference data type:     result = variable instanceof constructor
+** Chapter 5 Reference Types
+** Chapter 6 Object-Oriented Programming
+** Chapter 7 Function Expressions
+** Chapter 8 The Browser Object Model
+** Chapter 9 Client Detection
+** Chapter 10 The Document Object Model
+** Chapter 11 Dom Extensions
+** Chapter 12 Dom Levels 2 and 3
+** Chapter 13 Events
+** Chapter 14 Scripting Forms
+** Chapter 15 Graphics With Canvas
+** Chapter 16 HTML5 Scripting
+** Chapter 17 Error Handling And Debugging
+** Chapter 18 XML in Javascript
+** Chapter 19 Ecmascript for XML
+** Chapter 20 JSON
+** Chapter 21 Ajax and Comet
+** Chapter 22 Advanced Techniques
+** Chapter 23 Offline Applications And Client-Side Storage
+** Chapter 24 Best Practices
+** Chapter 25 Emerging APIs
+** Code
+#+BEGIN_EXAMPLE 
 
+#+END_EXAMPLE
