@@ -1,0 +1,50 @@
+* Professional Javascript for Web Developers 3rd Edition
+*This is a study note for study javascript. From reading book -- <Professional Javascript for Web Developers   3rd Edition>.*
+
+Author: wayne
+[2017-10-14 Sat] Start my study note.
+
+** Chapter1 Javascript Introduction
+Need to study: Javascript  DOM BOM
+
+** Chapter2 Javascript in HTML
+   1. <script>Element
+      defer and async
+      defer = "defer": load the script after the html was loaded.
+      async = "async": asynchronously load the scripts.
+      
+
+
+#+BEGIN_EXAMPLE 
+
+#+END_EXAMPLE
+** Chapter3 Basic concepts
+   1. strict mode
+      Add this line at the begin of the code
+      "use strict"
+   2. date types
+      Basic date types: Undefined,Null,Boolean,Number,String
+      Complex data types: Object
+      Use _typeof_ to check the type of the date.
+   3. NaN and isNaN()
+      alert(NaN == NaN);  //false
+      
+      alert(isNaN(NaN));  //true
+      alert(isNaN(10));   //false
+      alert(isNaN("10")); //false
+      alert(isNaN("blue"));  //true
+      alert(isNaN(true));  //false
+   4. numeric conversion
+      Number(), parseInt(), parseFloat()
+   5. Object
+      constructor
+      hasOwnProperty(propertyName)
+      isPrototypeOf(object)
+      propertyIsEnumerable(propertyName)
+      toLocaleString()
+      toString()
+      valueOf()
+
+
+      
+
