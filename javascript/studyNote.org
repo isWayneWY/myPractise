@@ -3,7 +3,7 @@
 
 Author: wayne
 [2017-10-14 Sat] Start my study note.
-
+[2017-10-15 Sun] Finish Chapter 4. 
 ** Chapter1 What Is Javascript
 Need to study: Javascript  DOM BOM
 ** Chapter2 Javascript in HTML
@@ -55,6 +55,21 @@ Need to study: Javascript  DOM BOM
       Basic data type:         typeof variable
       Reference data type:     result = variable instanceof constructor
 ** Chapter 5 Reference Types
+   1. two method to create Object type date
+      1:
+      #+BEGIN_EXAMPLE
+      var person = new Object();
+      person.name = "Nicholas";
+      person.age = 29;
+      #+END_EXAMPLE
+      
+      2:
+      #+BEGIN_EXAMPLE
+      var person = {
+        name : "Nicholas",
+        age  : 29
+      };
+      #+END_EXAMPLE
 ** Chapter 6 Object-Oriented Programming
 ** Chapter 7 Function Expressions
 ** Chapter 8 The Browser Object Model
