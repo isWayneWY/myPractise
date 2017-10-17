@@ -103,6 +103,38 @@
             </div>
         </div>
         </div>
+        <script type ="text/javascript">
+         let buttonsList = document.querySelectorAll('span');
+
+         var storeParas = (function(){
+             let paras = "";
+             return {
+                 setParas : function(key){
+                     key==='←'? paras = paras.slice(0,paras.length-1) : paras+=key;
+                 },
+                 getParas : function(){
+                     return paras;
+                 }
+             };
+         }());
+
+         let clickButtonHandler= function(e){
+             let key = e.target.dataset.key;
+             //             console.log(key);
+             let calcString;
+             if(key==='='){
+                 calcString = storeParas.getParas();
+                 console.log(calcString);
+             } else {
+                 storeParas.setParas(key);
+             }
+         };
+
+         buttonsList.forEach(button => {
+             return button.addEventListener('click',clickButtonHandler);
+         });
+
+        </script>
     </body>
 </html>
 
