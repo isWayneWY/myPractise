@@ -31,6 +31,7 @@
              height: 40%;
              display: flex;
              border-style:solid;
+             flex-direction: column;
          }
          #key{
              width: 100%;
@@ -42,6 +43,31 @@
              height: 100%;
              display: flex;
          }
+         #history{
+             width: auto;
+             height: 70%;
+             border-style: solid;
+             display:flex;
+             justify-content:flex-start;
+             align-items:flex-start;
+         }
+         #history p{
+             font-size: 18pt;
+             text-align:left;
+         }
+         #result{
+             width: auto;
+             height: 30%;
+             border-style: solid;
+             background-color: white;
+             display: flex;
+             justify-content: flex-end;
+             align-items:center;
+         }
+         #result p{
+             font-size: 30pt;
+             text-align: right;
+         }
          .row{
              justify-content:space-between;
          }
@@ -52,9 +78,15 @@
              border-width:0.5px;
              font-size:36pt;
              padding:5px;
+             background-color: orange;
          }
          #equal{
              width:172px;
+             background-color: blue;
+         }
+         #ce{
+             width:172px;
+             background-color : red;
          }
         </style>
     </head>
@@ -63,13 +95,17 @@
         <div class ="container">
         <div class ="calculator">
             <div id ="show">
+                <div id ="history">
+                </div>
+                <div id ="result">
+                    <p></p>
+                </div>
             </div>
             <div id ="key">
 
                 <div class = "row" >
-                    <span data-key = "c" >CE</span>
+                    <span data-key = "c" id ="ce" >CE</span>
                     <span data-key = "←" >←</span>
-                    <span data-key = "%" >%</span>
                     <span data-key = "/" >÷</span>
                 </div>
 
@@ -105,6 +141,20 @@
         </div>
         <script type ="text/javascript">
          let buttonsList = document.querySelectorAll('span');
+         let historyPara = document.querySelector('#history');
+         let resultPara = document.querySelector('#result').children[0];
+         resultPara.innerHTML = 0;
+
+         function ParseStringAndCalc(str){
+             let result = 0;
+             searchValue1 = /x/g;
+             searchValue2  = /÷/g;
+             str = str.replace(searchValue1,'*');
+             str = str.replace(searchValue2,'/');
+             console.log(str);
+             result = eval(str);
+             return result;
+         }
 
          var storeParas = (function(){
              let paras = "";
@@ -114,19 +164,43 @@
                  },
                  getParas : function(){
                      return paras;
+                 },
+                 clearParas : function(){
+                     paras = "";
                  }
              };
          }());
 
          let clickButtonHandler= function(e){
              let key = e.target.dataset.key;
-             //             console.log(key);
+             let result;
              let calcString;
+             let calcOverFlag = false;
              if(key==='='){
                  calcString = storeParas.getParas();
-                 console.log(calcString);
+                 result = ParseStringAndCalc(calcString);
+                 resultPara.innerHTML=result;
+
+                 storeParas.clearParas();
+                 storeParas.setParas(String(result)); //清除之前存入的字符串，并将结果存入
+                 calcOverFlag = true;
+             } else if(key==='c') {
+                 storeParas.clearParas();
+                 resultPara.innerHTML='0';
+                 calcOverFlag = false;
              } else {
+                 if(calcOverFlag){
+                     //判断是否输入了数字
+                 }
+                 if(key==='/'){
+                     key = '÷';
+                 }
                  storeParas.setParas(key);
+                 calcString = storeParas.getParas();
+                 if(calcString===''){    //如果用户一直按删除，可能会出现结果是空的情况，这时显示个 0 更美观一些
+                     calcString = '0';
+                 }
+                 resultPara.innerHTML=calcString;
              }
          };
 
