@@ -18,24 +18,24 @@
              justify-content:center;
          }
          .calculator{
-             background-color: gray;
+             background-color: #CCCCCC;
              width: 350px;
              max-width: 600px;
-             height: 500px;
+             height: 550px;
              display:flex;
              justify-content:center;
              padding: 5px 5px;
              flex-direction: column;
          }
          #show{
-             height: 40%;
+             height: 45%;
              display: flex;
              border-style:solid;
              flex-direction: column;
          }
          #key{
              width: 100%;
-             height: 60%;
+             height: 55%;
              display: flex;
              flex-direction: column;
          }
@@ -45,20 +45,19 @@
          }
          #history{
              width: auto;
-             height: 70%;
-             border-style: solid;
-             display:flex;
-             justify-content:flex-start;
-             align-items:flex-start;
+             height: 65%;
+             overflow-y: scroll;
          }
          #history p{
              font-size: 18pt;
              text-align:left;
+             height: 30px;
+             width: 100%;
+             margin: 0;
          }
          #result{
              width: auto;
-             height: 30%;
-             border-style: solid;
+             height: 25%;
              background-color: white;
              display: flex;
              justify-content: flex-end;
@@ -67,26 +66,34 @@
          #result p{
              font-size: 30pt;
              text-align: right;
+             height: 40px;
+         }
+         #error{
+             height: 10%;
+             display: flex;
+             justify-content: flex-end;
+             align-items:center;
+             background-color: white;
          }
          .row{
              justify-content:space-between;
          }
          .row span{
              width:80px;
-             background-color:white;
              border-style:solid;
              border-width:0.5px;
              font-size:36pt;
              padding:5px;
-             background-color: orange;
+             background-color: #FFCC99;
+             text-align: center;
          }
          #equal{
              width:172px;
-             background-color: blue;
+             background-color: #0099CC;
          }
          #ce{
              width:172px;
-             background-color : red;
+             background-color : #FF6666;
          }
         </style>
     </head>
@@ -98,6 +105,9 @@
                 <div id ="history">
                 </div>
                 <div id ="result">
+                    <p></p>
+                </div>
+                <div id ="error">
                     <p></p>
                 </div>
             </div>
@@ -143,7 +153,10 @@
          let buttonsList = document.querySelectorAll('span');
          let historyPara = document.querySelector('#history');
          let resultPara = document.querySelector('#result').children[0];
+         let errorPara = document.querySelector('#error').children[0];
+         let calcOverFlag = false;
          resultPara.innerHTML = 0;
+         errorPara.innerHTML = '';
 
          function ParseStringAndCalc(str){
              let result = 0;
@@ -152,7 +165,12 @@
              str = str.replace(searchValue1,'*');
              str = str.replace(searchValue2,'/');
              console.log(str);
-             result = eval(str);
+             try  {
+                 result = eval(str);
+             }
+             catch(exception) {
+                 result = "Malformed expression";
+             }
              return result;
          }
 
@@ -175,22 +193,37 @@
              let key = e.target.dataset.key;
              let result;
              let calcString;
-             let calcOverFlag = false;
+             errorPara.innerHTML = '';
              if(key==='='){
                  calcString = storeParas.getParas();
                  result = ParseStringAndCalc(calcString);
-                 resultPara.innerHTML=result;
 
-                 storeParas.clearParas();
-                 storeParas.setParas(String(result)); //清除之前存入的字符串，并将结果存入
-                 calcOverFlag = true;
+                 if(result!=="Malformed expression"){
+                     resultPara.innerHTML=result;
+
+                     storeParas.clearParas();
+                     storeParas.setParas(String(result)); //清除之前存入的字符串，并将结果存入
+                     calcOverFlag = true;
+
+                     //在history栏目中显示计算历史
+                     newHis = document.createElement('p');
+                     newHis.innerHTML = calcString+"="+result;
+                     historyPara.appendChild(newHis);
+                 } else {
+                     errorPara.innerHTML = result;
+                 }
              } else if(key==='c') {
                  storeParas.clearParas();
                  resultPara.innerHTML='0';
                  calcOverFlag = false;
              } else {
                  if(calcOverFlag){
+                     console.log(key);
                      //判断是否输入了数字
+                     if(key<='9' && key>='0'){
+                         resultPara.innerHTML = '';  //再次输入数字的话，清空上一次计算的结果
+                         storeParas.clearParas();  //缓存中存储的数据不再需要了
+                     }
                  }
                  if(key==='/'){
                      key = '÷';
@@ -201,6 +234,7 @@
                      calcString = '0';
                  }
                  resultPara.innerHTML=calcString;
+                 calcOverFlag = false;
              }
          };
 
