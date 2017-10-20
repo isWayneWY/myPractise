@@ -54,6 +54,7 @@
              height: 30px;
              width: 100%;
              margin: 0;
+             white-space:pre;
          }
          #result{
              width: auto;
@@ -86,6 +87,9 @@
              padding:5px;
              background-color: #FFCC99;
              text-align: center;
+             cursor: pointer;
+             -webkit-transition: all .3s;
+             transition: all .2s;
          }
          #equal{
              width:172px;
@@ -94,6 +98,12 @@
          #ce{
              width:172px;
              background-color : #FF6666;
+         }
+         .playing {
+	         transform: scale(1.02);
+	         border-color: #ffc600;
+	         box-shadow: 0 0 5px  #ffc600;
+
          }
         </style>
     </head>
@@ -164,7 +174,6 @@
              searchValue2  = /÷/g;
              str = str.replace(searchValue1,'*');
              str = str.replace(searchValue2,'/');
-             console.log(str);
              try  {
                  result = eval(str);
              }
@@ -194,8 +203,13 @@
              let result;
              let calcString;
              errorPara.innerHTML = '';
+             e.target.classList.add('playing');
+
              if(key==='='){
                  calcString = storeParas.getParas();
+                 if(calcString === ''){
+                     return;
+                 }
                  result = ParseStringAndCalc(calcString);
 
                  if(result!=="Malformed expression"){
@@ -207,7 +221,7 @@
 
                      //在history栏目中显示计算历史
                      newHis = document.createElement('p');
-                     newHis.innerHTML = calcString+"="+result;
+                     newHis.innerHTML = calcString+" = "+result;
                      historyPara.appendChild(newHis);
                  } else {
                      errorPara.innerHTML = result;
@@ -218,8 +232,7 @@
                  calcOverFlag = false;
              } else {
                  if(calcOverFlag){
-                     console.log(key);
-                     //判断是否输入了数字
+                      //判断是否输入了数字
                      if(key<='9' && key>='0'){
                          resultPara.innerHTML = '';  //再次输入数字的话，清空上一次计算的结果
                          storeParas.clearParas();  //缓存中存储的数据不再需要了
@@ -238,9 +251,14 @@
              }
          };
 
-         buttonsList.forEach(button => {
-             return button.addEventListener('click',clickButtonHandler);
-         });
+         function removeTransition(e){
+             if(e.propertyName !== 'transform') return;
+             this.classList.remove('playing');
+             //             console.log(this);
+         }
+
+         buttonsList.forEach(button => button.addEventListener('click',clickButtonHandler));
+         buttonsList.forEach(button => button.addEventListener('transitionend', removeTransition));
 
         </script>
     </body>
