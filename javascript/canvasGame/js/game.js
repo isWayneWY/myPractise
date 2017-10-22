@@ -64,7 +64,7 @@ var update = function(modifier){
     if(37 in keysDown){// Player holding left
         hero.x -= hero.speed * modifier;
     }
-    if(38 in keysDown){// Player holding right
+    if(39 in keysDown){// Player holding right
         hero.x += hero.speed * modifier;
     }
 
@@ -116,12 +116,10 @@ let main = function(){
     // Request to do this again ASAP
     requestAnimationFrame(main);
 };
-
-let w = windows;
+let w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
 // Let's play this game!
 let then = Date.now();
-
 reset();
 main();
